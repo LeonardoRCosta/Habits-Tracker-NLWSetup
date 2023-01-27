@@ -7,6 +7,7 @@ import {
   Inter_800ExtraBold,
   useFonts,
 } from '@expo-google-fonts/inter';
+import * as Notifications from 'expo-notifications';
 import { StatusBar } from 'react-native';
 
 import { Loading } from './src/components/Loading';
@@ -19,6 +20,19 @@ export default function App() {
     Inter_700Bold,
     Inter_800ExtraBold,
   });
+
+  async function scheduleNotifications() {
+    const trigger = new Date(Date.now());
+    trigger.setMinutes(trigger.getMinutes() + 1);
+
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Salve Leozera!',
+        body: 'Você foi pra academia hoje?',
+      },
+      trigger,
+    });
+  }
 
   if (!fontsLoaded) return <Loading />;
 
